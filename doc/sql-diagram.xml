@@ -32,7 +32,7 @@
 		<type label="SET" length="1" sql="SET" quote=""/>
 		<type label="Bit" length="0" sql="bit" quote=""/>
 	</group>
-</datatypes><table x="197" y="428" name="Account">
+</datatypes><table x="194" y="508" name="Account">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -49,25 +49,32 @@
 <part>id</part>
 </key>
 </table>
-<table x="190" y="127" name="Game">
+<table x="159" y="136" name="Game">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
 <row name="status" null="0" autoincrement="0">
 <datatype>CHAR</datatype>
 <default>'NULL'</default></row>
-<row name="winner" null="0" autoincrement="0">
+<row name="home_score" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="away_score" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="Home" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="Team" row="id" />
 </row>
-<row name="result" null="1" autoincrement="0">
-<datatype>CHAR</datatype>
-<default>NULL</default></row>
+<row name="Away" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="Team" row="id" />
+</row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
 </table>
-<table x="482" y="260" name="Bet">
+<table x="559" y="270" name="Bet">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -93,12 +100,12 @@
 <part>id</part>
 </key>
 </table>
-<table x="765" y="150" name="Team">
+<table x="806" y="160" name="Team">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
-<row name="name" null="1" autoincrement="0">
-<datatype>VARCHAR</datatype>
+<row name="name (255)" null="1" autoincrement="0">
+<datatype>VARCHAR(255)</datatype>
 <default>NULL</default></row>
 <key type="PRIMARY" name="">
 <part>id</part>
