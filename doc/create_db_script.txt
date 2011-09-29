@@ -1,0 +1,97 @@
+-- ---
+-- Globals
+-- ---
+
+-- SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+-- SET FOREIGN_KEY_CHECKS=0;
+
+-- ---
+-- Table 'Account'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `Account`;
+		
+CREATE TABLE `Account` (
+  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+  `user` VARCHAR(255) NOT NULL DEFAULT 'NULL',
+  `pass` VARCHAR(255) NOT NULL DEFAULT 'NULL',
+  `balance` DECIMAL NOT NULL DEFAULT 10.00,
+  PRIMARY KEY (`id`)
+);
+
+-- ---
+-- Table 'Game'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `Game`;
+		
+CREATE TABLE `Game` (
+  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+  `status` CHAR NOT NULL DEFAULT 'NULL',
+  `winner` VARCHAR NOT NULL DEFAULT 'NULL',
+  PRIMARY KEY (`id`)
+);
+
+-- ---
+-- Table 'Bet'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `Bet`;
+		
+CREATE TABLE `Bet` (
+  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+  `Team` VARCHAR(255) NOT NULL DEFAULT 'NULL',
+  `wager` DECIMAL NOT NULL DEFAULT NULL,
+  `status` CHAR NULL DEFAULT NULL,
+  `Game` VARCHAR(255) NOT NULL DEFAULT 'NULL',
+  `Account` VARCHAR(255) NOT NULL DEFAULT 'NULL',
+  PRIMARY KEY (`id`)
+);
+
+-- ---
+-- Table 'Team'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `Team`;
+		
+CREATE TABLE `Team` (
+  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+  `name` VARCHAR NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- ---
+-- Foreign Keys 
+-- ---
+
+ALTER TABLE `Game` ADD FOREIGN KEY (winner) REFERENCES `Team` (`id`);
+ALTER TABLE `Bet` ADD FOREIGN KEY (Team) REFERENCES `Team` (`id`);
+ALTER TABLE `Bet` ADD FOREIGN KEY (Game) REFERENCES `Game` (`id`);
+ALTER TABLE `Bet` ADD FOREIGN KEY (Account) REFERENCES `Account` (`id`);
+
+-- ---
+-- Table Properties
+-- ---
+
+-- ALTER TABLE `Account` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `Game` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `Bet` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `Team` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- ---
+-- Test Data
+-- ---
+
+-- INSERT INTO `Account` (`id`,`user`,`pass`,`balance`) VALUES
+-- ('','','','');
+-- INSERT INTO `Game` (`id`,`status`,`winner`) VALUES
+-- ('','','');
+-- INSERT INTO `Bet` (`id`,`Team`,`wager`,`status`,`Game`,`Account`) VALUES
+-- ('','','','','','');
+-- INSERT INTO `Team` (`id`,`name`) VALUES
+-- ('','');
+
