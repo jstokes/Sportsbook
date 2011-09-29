@@ -32,14 +32,14 @@
 		<type label="SET" length="1" sql="SET" quote=""/>
 		<type label="Bit" length="0" sql="bit" quote=""/>
 	</group>
-</datatypes><table x="212" y="486" name="Account">
+</datatypes><table x="197" y="428" name="Account">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
-<row name="user" null="0" autoincrement="0">
+<row name="user (255)" null="0" autoincrement="0">
 <datatype>VARCHAR(255)</datatype>
 <default>'NULL'</default></row>
-<row name="pass" null="0" autoincrement="0">
+<row name="pass (255)" null="0" autoincrement="0">
 <datatype>VARCHAR(255)</datatype>
 <default>'NULL'</default></row>
 <row name="balance" null="0" autoincrement="0">
@@ -57,20 +57,23 @@
 <datatype>CHAR</datatype>
 <default>'NULL'</default></row>
 <row name="winner" null="0" autoincrement="0">
-<datatype>VARCHAR</datatype>
-<default>'NULL'</default><relation table="Team" row="id" />
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="Team" row="id" />
 </row>
+<row name="result" null="1" autoincrement="0">
+<datatype>CHAR</datatype>
+<default>NULL</default></row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
 </table>
-<table x="509" y="273" name="Bet">
+<table x="482" y="260" name="Bet">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
 <row name="Team" null="0" autoincrement="0">
-<datatype>VARCHAR(255)</datatype>
-<default>'NULL'</default><relation table="Team" row="id" />
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="Team" row="id" />
 </row>
 <row name="wager" null="0" autoincrement="0">
 <datatype>DECIMAL</datatype>
@@ -79,18 +82,18 @@
 <datatype>CHAR</datatype>
 <default>NULL</default></row>
 <row name="Game" null="0" autoincrement="0">
-<datatype>VARCHAR(255)</datatype>
-<default>'NULL'</default><relation table="Game" row="id" />
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="Game" row="id" />
 </row>
 <row name="Account" null="0" autoincrement="0">
-<datatype>VARCHAR(255)</datatype>
-<default>'NULL'</default><relation table="Account" row="id" />
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="Account" row="id" />
 </row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
 </table>
-<table x="711" y="149" name="Team">
+<table x="765" y="150" name="Team">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
