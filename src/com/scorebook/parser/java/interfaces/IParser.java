@@ -1,8 +1,8 @@
 package com.scorebook.parser.java.interfaces;
 
-import com.scorebook.parser.java.interfaces.IGame;
+import com.scorebook.parser.java.Game;
 
 public interface IParser {
     String source =  null;
-    IGame[] parse();
+    Game[] parse();
 }

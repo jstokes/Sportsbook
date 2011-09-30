@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<project default="setup-hibernate.cfg.xml" name="Hibernate" basedir=".">
+	<property file="${basedir}/config/build.properties" />
+	<loadproperties srcfile="${basedir}/config/build.properties" />
+
+<target name="setup-hibernate.cfg.xml">
+	<condition property="hibernate_dialect" value="${hibernate.dialect.mysql}">
+		<equals arg1="mysql" arg2="${DIALECT}" />
+	</condition>
+	<filter token="hibernateDialect" value="${hibernate_dialect}" />
+	<filter token="user" value="${USER}" />
+	<filter token="pass" value="${PASS}" />
+	<filter token="connection_url" value="${hibernate.dialect.connection_url}" />
+	<delete file="hibernate.cfg.xml" />
+	<copy todir="." filtering="true">
+	<fileset dir="config/hibernate">
+		<include name="hibernate.cfg.xml" />
+	</fileset>
+	</copy>
+</target>
+</project>

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+	<class name="com.scorebook.parser.Team" table="Team">
+		<id name="id" type="int" column="ID">
+			<generator class="assigned" />
+		</id>
+	</class>
+
+	<property name="name">
+		<column name="name" />
+	</property>
+
+</hibernate-mapping>
