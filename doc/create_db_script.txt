@@ -1,3 +1,7 @@
+
+
+
+
 -- ---
 -- Globals
 -- ---
@@ -13,9 +17,9 @@
 DROP TABLE IF EXISTS `Account`;
 		
 CREATE TABLE `Account` (
-  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
-  `user` VARCHAR(255) NOT NULL DEFAULT 'NULL',
-  `pass` VARCHAR(255) NOT NULL DEFAULT 'NULL',
+  `id` INTEGER NOT NULL AUTO_INCREMENT,
+  `user (255)` VARCHAR(255) NOT NULL DEFAULT 'NULL',
+  `pass (255)` VARCHAR(255) NOT NULL DEFAULT 'NULL',
   `balance` DECIMAL NOT NULL DEFAULT 10.00,
   PRIMARY KEY (`id`)
 );
@@ -28,9 +32,12 @@ CREATE TABLE `Account` (
 DROP TABLE IF EXISTS `Game`;
 		
 CREATE TABLE `Game` (
-  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
-  `status` CHAR NOT NULL DEFAULT 'NULL',
-  `winner` VARCHAR NOT NULL DEFAULT 'NULL',
+  `id` INTEGER NOT NULL AUTO_INCREMENT,
+  `status` CHAR NOT NULL DEFAULT 'N',
+  `home_score` INTEGER NULL,
+  `away_score` INTEGER NULL,
+  `Home` INTEGER NULL DEFAULT NULL,
+  `Away` INTEGER NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -42,12 +49,12 @@ CREATE TABLE `Game` (
 DROP TABLE IF EXISTS `Bet`;
 		
 CREATE TABLE `Bet` (
-  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
-  `Team` VARCHAR(255) NOT NULL DEFAULT 'NULL',
-  `wager` DECIMAL NOT NULL DEFAULT NULL,
-  `status` CHAR NULL DEFAULT NULL,
-  `Game` VARCHAR(255) NOT NULL DEFAULT 'NULL',
-  `Account` VARCHAR(255) NOT NULL DEFAULT 'NULL',
+  `id` INTEGER NOT NULL AUTO_INCREMENT,
+  `Team` INTEGER NOT NULL DEFAULT 0,
+  `wager` DECIMAL NOT NULL DEFAULT 0,
+  `status` CHAR NULL DEFAULT 'N',
+  `Game` INTEGER NOT NULL DEFAULT 0,
+  `Account` INTEGER NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
 );
 
@@ -59,8 +66,8 @@ CREATE TABLE `Bet` (
 DROP TABLE IF EXISTS `Team`;
 		
 CREATE TABLE `Team` (
-  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
-  `name` VARCHAR NULL DEFAULT NULL,
+  `id` INTEGER NOT NULL AUTO_INCREMENT,
+  `name (255)` VARCHAR(255) NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -68,7 +75,8 @@ CREATE TABLE `Team` (
 -- Foreign Keys 
 -- ---
 
-ALTER TABLE `Game` ADD FOREIGN KEY (winner) REFERENCES `Team` (`id`);
+ALTER TABLE `Game` ADD FOREIGN KEY (Home) REFERENCES `Team` (`id`);
+ALTER TABLE `Game` ADD FOREIGN KEY (Away) REFERENCES `Team` (`id`);
 ALTER TABLE `Bet` ADD FOREIGN KEY (Team) REFERENCES `Team` (`id`);
 ALTER TABLE `Bet` ADD FOREIGN KEY (Game) REFERENCES `Game` (`id`);
 ALTER TABLE `Bet` ADD FOREIGN KEY (Account) REFERENCES `Account` (`id`);
@@ -86,12 +94,12 @@ ALTER TABLE `Bet` ADD FOREIGN KEY (Account) REFERENCES `Account` (`id`);
 -- Test Data
 -- ---
 
--- INSERT INTO `Account` (`id`,`user`,`pass`,`balance`) VALUES
+-- INSERT INTO `Account` (`id`,`user (255)`,`pass (255)`,`balance`) VALUES
 -- ('','','','');
--- INSERT INTO `Game` (`id`,`status`,`winner`) VALUES
--- ('','','');
+-- INSERT INTO `Game` (`id`,`status`,`home_score`,`away_score`,`Home`,`Away`) VALUES
+-- ('','','','','','');
 -- INSERT INTO `Bet` (`id`,`Team`,`wager`,`status`,`Game`,`Account`) VALUES
 -- ('','','','','','');
--- INSERT INTO `Team` (`id`,`name`) VALUES
+-- INSERT INTO `Team` (`id`,`name (255)`) VALUES
 -- ('','');
 
