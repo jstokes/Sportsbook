@@ -12,7 +12,7 @@
 	<filter token="pass" value="${PASS}" />
 	<filter token="connection_url" value="${hibernate.dialect.connection_url}" />
 	<delete file="hibernate.cfg.xml" />
-	<copy todir="." filtering="true">
+	<copy todir="src" filtering="true">
 	<fileset dir="config/hibernate">
 		<include name="hibernate.cfg.xml" />
 	</fileset>

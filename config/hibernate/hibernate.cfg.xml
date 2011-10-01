@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+
 <hibernate-configuration>
 	<session-factory name="HibernateFactory">
 		<property name="dialect">@hibernateDialect@</property>
@@ -10,8 +15,8 @@
 		<property name="hibernate.connection.url">@connection_url@</property>
 
 		<!-- Mapping files -->
-		<mapping resource="mappings/game.hbm.xml" />
-		<mapping resource="mappings/team.hbm.xml" />
+		<mapping resource="config/hibernate/mappings/game.hbm.xml" />
+		<mapping resource="config/hibernate/mappings/team.hbm.xml" />
 		
 	</session-factory>
 </hibernate-configuration>
