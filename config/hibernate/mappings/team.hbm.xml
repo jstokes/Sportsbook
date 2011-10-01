@@ -5,7 +5,7 @@
 
 <hibernate-mapping>
 
-	<class name="com.scorebook.parser.Team" table="Team">
+	<class name="com.scorebook.parser.java.Team" table="Team">
 		<id name="id" type="int" column="id">
 			<generator class="assigned" />
 		</id>

@@ -18,6 +18,10 @@
 			<column name="home_score"/>
 		</property>
 
+        <property name="away_score">
+            <column name="away_score" />
+        </property>
+
 		<property name="away">
 			<column name="Away" />
 		</property>

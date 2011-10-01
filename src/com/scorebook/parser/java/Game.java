@@ -34,19 +34,19 @@ public class Game {
         this.away_score = away_score;
     }
 
-    public Team getAway() {
+    public int getAway() {
         return away;
     }
 
-    public void setAway(Team away) {
+    public void setAway(int away) {
         this.away = away;
     }
 
-    public Team getHome() {
+    public int getHome() {
         return home;
     }
 
-    public void setHome(Team home) {
+    public void setHome(int home) {
         this.home = home;
     }
 
@@ -54,6 +54,6 @@ public class Game {
     private char status;
     private int home_score;
     private int away_score;
-    private Team away;
-    private Team home;
+    private int away;
+    private int home;
 }

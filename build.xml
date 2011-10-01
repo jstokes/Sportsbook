@@ -11,6 +11,7 @@
 	<filter token="user" value="${USER}" />
 	<filter token="pass" value="${PASS}" />
 	<filter token="connection_url" value="${hibernate.dialect.connection_url}" />
+    <filter token="DriverClass" value="${hibernate.connection.driver_class}" />
 	<delete file="hibernate.cfg.xml" />
 	<copy todir="src" filtering="true">
 	<fileset dir="config/hibernate">

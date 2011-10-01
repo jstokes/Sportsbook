@@ -5,14 +5,15 @@
 
 
 <hibernate-configuration>
-	<session-factory name="HibernateFactory">
+	<session-factory>
 		<property name="dialect">@hibernateDialect@</property>
 		<property name="show_sql">true</property>
 		<property name="hibernate.hbm2ddl.auto">update</property>
 		<property name="hibernate.connection.pool_size">10</property>
-		<property name="hibernate.connect.username">@user@</property>
+		<property name="hibernate.connection.user">@user@</property>
 		<property name="hibernate.connection.password">@pass@</property>
 		<property name="hibernate.connection.url">@connection_url@</property>
+        <property name="hibernate.connection.driver_class">@DriverClass@</property>
 
 		<!-- Mapping files -->
 		<mapping resource="config/hibernate/mappings/game.hbm.xml" />
