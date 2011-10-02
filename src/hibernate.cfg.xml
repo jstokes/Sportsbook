@@ -18,6 +18,7 @@
 		<!-- Mapping files -->
 		<mapping resource="config/hibernate/mappings/game.hbm.xml" />
 		<mapping resource="config/hibernate/mappings/team.hbm.xml" />
-		
+		<mapping resource="config/hibernate/mappings/league.hbm.xml" />
+        
 	</session-factory>
 </hibernate-configuration>

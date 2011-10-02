@@ -1,8 +1,12 @@
-package com.scorebook.parser.java;
+package com.sportsbook.parser.java;
 
-public class Team {
-
-    public int getId() {
+/**
+ * Created by Jeff Stokes.
+ * Date: 10/2/11
+ * Time: 3:42 PM
+ */
+public class League {
+    public long getId() {
         return id;
     }
 
@@ -18,6 +22,6 @@ public class Team {
         this.name = name;
     }
 
-    private int id;
+    private long id;
     private String name;
 }

@@ -5,8 +5,8 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-	<class name="com.scorebook.parser.java.Game" table="Game">
-		<id name="id" type="int" column="id">
+	<class name="com.sportsbook.parser.java.Game" table="Game">
+		<id name="id" type="long" column="id">
 			<generator class="assigned" />
 		</id>
 

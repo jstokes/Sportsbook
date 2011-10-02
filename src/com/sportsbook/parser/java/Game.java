@@ -1,8 +1,8 @@
-package com.scorebook.parser.java;
+package com.sportsbook.parser.java;
 
 public class Game {
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -50,7 +50,7 @@ public class Game {
         this.home = home;
     }
 
-    private int id;
+    private long id;
     private char status;
     private int home_score;
     private int away_score;
