@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project default="init" name="Sportsbook" basedir=".">
+<project default="build and run" name="Sportsbook" basedir=".">
 	<property file="${basedir}/config/build.properties" />
 	<loadproperties srcfile="${basedir}/config/build.properties" />
 
@@ -20,15 +20,96 @@
         </copy>
     </target>
 
-    <target name="lib-init">
-        <fileset dir="lib">
-            <include name="*.jar" />
-        </fileset>
+	<target name="build" depends="package" description="Build whole project"/>
+
+	<target name="clean" depends="init">
+		<delete dir="${build.dir}" includeemptydirs="true" quiet="true" />
+	</target>
+
+    <target name="init" depends="setup-hibernate">
+		<property environment="env"/>
+
+		<fail message="Missing SCALA_HOME variable in OS environment">
+			<condition><isset property="${env.SCALA_HOME}" /></condition>
+		</fail>
+		<fail message="Missing JAVA_HOME variable in OS environment">
+			<condition><isset property="${env.JAVA_HOME}"/></condition>
+		</fail>
+
+		<property name="src.dir" location="${basedir}/src" />
+		<property name="lib.dir" location="${basedir}/lib" />
+		<property name="build.dir" location="${basedir}/build"/>
+		<property name="build-classes.dir" location="${build.dir}/classes"/>
+		<property name="build-lib.dir" location="${build.dir}/lib"/>
+		<property name="build-doc.dir" location="${build.dir}/doc"/>
+		<property name="java.dir" location="${env.JAVA_HOME}"/>
+		<property name="scala.dir" location="${env.SCALA_HOME}"/>
+		<property name="scala-library.jar" location="${scala.dir}/lib/scala-library.jar"/>
+		<property name="scala-compiler.jar" location="${scala.dir}/lib/scala-compiler.jar"/>
+		<property name="test.dir" location="${build-classes.dir}/com/sportsbook/test" />
+		<property name="test.main" location="${test.dir}/Main"/>
+
+		<property name="Main"
+				  location="${build-classes.dir}/com/sportsbook/parser/scala/ScoreParser"/>
+
+		<path id="project.classpath">
+		  <pathelement location="${scala-library.jar}"/>
+		  <pathelement location="${build-classes.dir}"/> <!-- used during recompilation -->
+		</path>
+
+		<path id="scala.classpath">
+		  <pathelement location="${scala-compiler.jar}"/>
+		  <pathelement location="${scala-library.jar}"/>
+		</path>
+
+		<taskdef resource="scala/tools/ant/antlib.xml" classpathref="scala.classpath"/>
+
+		<!-- print where this project will get scala and java from -->
+		<echo message="Init project"/>
+		<echo message=" with scala.dir = ${scala.dir}"/>
+		<echo message=" with java.dir = ${java.dir}"/>
+
+		<!-- check if any files has been modified since last build -->
+		<uptodate property="build.uptodate" targetfile="${build.dir}/build.done">
+		  <srcfiles dir= "${src.dir}" includes="**"/>
+		  <srcfiles dir= "${lib.dir}" includes="**"/>
+		</uptodate>
     </target>
 
-    <target name="init" depends="lib-init, setup-hibernate" />
+	<target name="compile" depends="init" unless="build.uptodate">
+		<mkdir dir="${build-classes.dir}"/>
+		<scalac destdir="${build-classes.dir}" classpathref="project.classpath">
+		  <include name="**/*.scala"/>
+		  <include name="**/*.java" />
+		  <src><pathelement location="${src.dir}"/></src>
+		</scalac>
 
-    <target name="run" depends="init">
+		<javac srcdir="${src.dir}"
+			   destdir="${build-classes.dir}"
+			   classpathref="project.classpath" />
+	</target>
 
-    </target>
+	<target name="package" depends="compile" unless="build.uptodate">
+		<mkdir dir="${build-lib.dir}"/>
+		<jar destfile="${build-lib.dir}/sportsbook.jar">
+		  <fileset dir="${build-classes.dir}"/>
+			<manifest>
+				<attribute name="Main-Class" value="${test.main}"/>
+			</manifest>
+		</jar>
+		<jar destfile="${build-lib.dir}/sportsbook-src.jar">
+		  <fileset dir="${src.dir}" includes="**/*.scala"/>
+		  <fileset dir="${src.dir}" includes="**/*.java" />
+		</jar>
+		<touch file="${build.dir}/build.done"/> <!-- mark build as up-to-date -->
+  	</target>
+
+	<target name="run" depends="init">
+		<java jar="${build-lib.dir}/sportsbook.jar" fork="true" />
+	</target>
+
+	<target name="build and run" depends="package">
+		<!-- <java jar="${build-lib.dir}/sportsbook.jar" fork="true" /> -->
+		<java classname="${test.main}" fork="true" />
+	</target>
 </project>

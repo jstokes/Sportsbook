@@ -1,6 +1,6 @@
 package com.sportsbook.parser.scala
 
-import _root_.java.net.{URL, URLConnection, URLConnection}
+import _root_.java.net.{URL, URLConnection}
 import com.sportsbook.parser.java.{Game, League, Team}
 import com.sportsbook.parser.IParser
 import _root_.scala.xml._
@@ -15,7 +15,7 @@ class ScoreParser extends IParser {
    }
    def parse = null
 
-   def main(args:Array[String]) {
-      println(getSource)
-   }
+  def readSource() = {
+    getSource.toString();
+  }
 }

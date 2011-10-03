@@ -20,7 +20,7 @@ public class Game {
 
     public int getHome_score() {
         return home_score;
-    }
+    }   
 
     public void setHome_score(int home_score) {
         this.home_score = home_score;
