@@ -1,9 +1,8 @@
-package com.sportsbook.parser;
+package sportsbook.parser;
 
-import com.sportsbook.parser.java.Game;
+import sportsbook.types.Game;
 
 public interface IParser {
     String source =  null;
-    Game[] parse();
-    String readSource(); //for testing
+    Game[] parse(String src);
 }

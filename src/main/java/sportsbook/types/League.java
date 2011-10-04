@@ -1,4 +1,4 @@
-package com.sportsbook.parser.java;
+package sportsbook.types;
 
 /**
  * Created by Jeff Stokes.
