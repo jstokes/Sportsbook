@@ -15,7 +15,6 @@ public class Sportsbook {
         run();
     }
 
-
     private static void run() {
         updateDB();
     }
@@ -25,11 +24,11 @@ public class Sportsbook {
     }
 
     private static void updateGameDB() {
-        final String src = "http://scores.espn.go.com/nfl/scoreboard";
+        //final String src = "http://scores.espn.go.com/nfl/scoreboard";
         ScoreParser parser = new ScoreParser();
-        Game[] games = parser.parse(src);
+        //Game[] games = parser.parse(src);
 
         GameDAO gDAO = new GameDAO();
-        gDAO.postToDB(games);
+        //gDAO.postToDB(games);
     }
 }
