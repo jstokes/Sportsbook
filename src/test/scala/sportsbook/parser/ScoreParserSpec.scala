@@ -13,7 +13,7 @@ class ScoreParserSpec extends FeatureSpec with GivenWhenThen {
       given("html is in correct format")
         val src = io.Source.fromFile(SCORE_FILE_PATH).mkString
       when("parse is invoked")
-        val sp = new ScoreParser()
+        val sp = new ScoreParser
         val games:Array[Game] = sp.parse(src)
       then("there should be " + NUM_GAMES + " games returned")
         assert(games.length == 15)

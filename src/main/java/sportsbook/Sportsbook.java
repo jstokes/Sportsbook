@@ -1,7 +1,6 @@
 package sportsbook;
 
 import sportsbook.dao.GameDAO;
-import sportsbook.http.MyConnection;
 import sportsbook.parser.ScoreParser;
 import sportsbook.types.Game;
 
@@ -26,9 +25,7 @@ public class Sportsbook {
     }
 
     private static void updateGameDB() {
-        MyConnection con = new MyConnection("http://scores.espn.go.com/nfl/scoreboard");
-        String src = con.getSource();
-
+        final String src = "http://scores.espn.go.com/nfl/scoreboard";
         ScoreParser parser = new ScoreParser();
         Game[] games = parser.parse(src);
 

@@ -6,8 +6,7 @@ import sportsbook.types.{Game}
 class ScoreParser extends IParser {
   
   def parse(src:String):Array[Game] = {
-    val xml:Node = getXHTML
-
+    lazy val myxml:Node = getXHTML
 
     def getXHTML:Node = {
       val hp = new HTMLParser
@@ -15,5 +14,13 @@ class ScoreParser extends IParser {
     }
     null
   }
-
 }
+
+/*
+scala> def attributeEquals(name:String, value:String)(node: Node) =
+     | node.attribute(name).filter(_.toString==value).isDefined
+attributeEquals: (name: String, value: String)(node: scala.xml.Node)Boolean
+
+scala> snippet \\ "_" filter attributeEquals("class", "score-row")
+res88: scala.xml.NodeSeq = NodeSeq()
+*/
