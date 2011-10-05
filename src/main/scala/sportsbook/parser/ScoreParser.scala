@@ -9,7 +9,7 @@ class ScoreParser extends IParser {
     def scoresById(id:Int):(String, String) = {
       lazy val home_score:String = get_score('h')
       lazy val away_score:String = get_score('a')
-      val attrStr = "%s-%cTotal"
+      lazy val attrStr = "%s-%cTotal"
 
       def get_score(homeOrAway:Char):String = {
         def attributeEquals(name:String, value:String)(node: Node) = {
@@ -25,6 +25,17 @@ class ScoreParser extends IParser {
       (home_score, away_score)
     }
 
+
+    val JSExtractor = """(?s)<script type="text/javascript">\s*function gameObj(?:(?!</script>)[\s\S]).*""".r
+    val GameExtractor = """.*var thisGame = new gameObj\(\"(\\d+)\", \"(\\d+)\", \"(\\d+)\".*""".r
+
+    JSExtractor findFirstIn(xml.toString) match {
+      case Some(src:String) =>
+        (GameExtractor findAllIn src).matchData foreach { m =>
+          println(m.subgroups mkString ",")
+        }
+      case _ => println("Match error")
+    }
     null
   }
 }
@@ -84,3 +95,9 @@ class ScoreParser extends IParser {
 			
 			
 */
+
+/*
+
+GameExtractor: .*var thisGame = new gameObj\("(\d+)", "(\d+)", "(\d+)".*
+JSExtractor <script type="text/javascript">\s*function gameObj(?:(?!</script>)[\s\S]).*
+ */

@@ -11,7 +11,7 @@ class ScoreParserSpec extends FeatureSpec with GivenWhenThen {
   val NUM_GAMES = 15;
   val SCORE_FILE_PATH = "src/test/scala/sportsbook/parser/testscores.txt"
 
-  feature("ScoreParser can read through http and retrieve game scores") {
+  feature("ScoreParser can read through html and retrieve game scores") {
     scenario("reading information from html") {
       given("html is in correct format")
         val file = new File(SCORE_FILE_PATH)
