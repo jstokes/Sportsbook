@@ -2,11 +2,20 @@ package sportsbook.types;
 
 public class Game {
 
+    public Game(long id, char status, int home_score, int away_score, long home, long away) {
+        this.id = id;
+        this.status = status;
+        this.home_score = home_score;
+        this.away_score = away_score;
+        this.home = home;
+        this.away = away;
+    }
+    
     public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -34,19 +43,19 @@ public class Game {
         this.away_score = away_score;
     }
 
-    public int getAway() {
+    public long getAway() {
         return away;
     }
 
-    public void setAway(int away) {
+    public void setAway(long away) {
         this.away = away;
     }
 
-    public int getHome() {
+    public long getHome() {
         return home;
     }
 
-    public void setHome(int home) {
+    public void setHome(long home) {
         this.home = home;
     }
 
@@ -54,6 +63,6 @@ public class Game {
     private char status;
     private int home_score;
     private int away_score;
-    private int away;
-    private int home;
+    private long away;
+    private long home;
 }

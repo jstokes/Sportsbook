@@ -2,6 +2,7 @@ package sportsbook.parser;
 
 import scala.xml._
 import sportsbook.types.{Game}
+import util.matching.Regex
 
 class ScoreParser extends IParser {
   
@@ -9,9 +10,9 @@ class ScoreParser extends IParser {
     def scoresById(id:Int):(String, String) = {
       lazy val home_score:String = get_score('h')
       lazy val away_score:String = get_score('a')
-      lazy val attrStr = "%s-%cTotal"
 
       def get_score(homeOrAway:Char):String = {
+        val attrStr = "%s-%cTotal"
         def attributeEquals(name:String, value:String)(node: Node) = {
           node.attribute(name).filter(_.toString==value).isDefined
         }
@@ -26,12 +27,17 @@ class ScoreParser extends IParser {
     }
 
 
-    val JSExtractor = """(?s)<script type="text/javascript">\s*function gameObj(?:(?!</script>)[\s\S]).*""".r
-    val GameExtractor = """.*var thisGame = new gameObj\(\"(\\d+)\", \"(\\d+)\", \"(\\d+)\".*""".r
+    val JSExtractor =
+      """<script type="text/javascript">\s*function gameObj([\S\s]*?)</script>""".r
+    val GameExtractor =
+      """.*var thisGame = new gameObj\("(\d+)", "(\d+)", "(\d+)".*""".r
 
-    JSExtractor findFirstIn(xml.toString) match {
+    val jsExtract: Option[String] = JSExtractor findFirstIn (xml.toString)
+
+    jsExtract match {
       case Some(src:String) =>
-        (GameExtractor findAllIn src).matchData foreach { m =>
+        val rplSrc = src.replaceAll("&quot;", "\"")
+        (GameExtractor findAllIn rplSrc).matchData foreach { m =>
           println(m.subgroups mkString ",")
         }
       case _ => println("Match error")
