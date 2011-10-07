@@ -7,11 +7,11 @@ import util.matching.Regex
 class ScoreParser extends IParser {
   
   def parse(xml:Node):Array[Game] = {
-    def scoresById(id:Int):(String, String) = {
-      lazy val home_score:String = get_score('h')
-      lazy val away_score:String = get_score('a')
+    def scoresById(id:Int):(Int, Int) = {
+      lazy val home_score:Int = get_score('h')
+      lazy val away_score:Int = get_score('a')
 
-      def get_score(homeOrAway:Char):String = {
+      def get_score(homeOrAway:Char):Int = {
         val attrStr = "%s-%cTotal"
         def attributeEquals(name:String, value:String)(node: Node) = {
           node.attribute(name).filter(_.toString==value).isDefined
@@ -19,30 +19,47 @@ class ScoreParser extends IParser {
         def attrCond: (Node) => Boolean = {
           attributeEquals("id", attrStr.format(id.toString, homeOrAway))
         }
-        
-        (xml \\ "_").filter(attrCond).text
+
+        def filterbyAttr:String = {
+          (xml \\ "_").filter(attrCond).text
+        }
+
+        Integer.parseInt(filterbyAttr)
       }
 
       (home_score, away_score)
     }
-
 
     val JSExtractor =
       """<script type="text/javascript">\s*function gameObj([\S\s]*?)</script>""".r
     val GameExtractor =
       """.*var thisGame = new gameObj\("(\d+)", "(\d+)", "(\d+)".*""".r
 
-    val jsExtract: Option[String] = JSExtractor findFirstIn (xml.toString)
+    val jsExtract: Option[String] = JSExtractor findFirstIn (xml toString)
 
-    jsExtract match {
-      case Some(src:String) =>
-        val rplSrc = src.replaceAll("&quot;", "\"")
-        (GameExtractor findAllIn rplSrc).matchData foreach { m =>
-          println(m.subgroups mkString ",")
-        }
-      case _ => println("Match error")
+    def extractGames(src:String):List[Game] = {
+      val rplSrc = src.replaceAll("&quot;", "\"")
+      val match_data = (GameExtractor findAllIn rplSrc).matchData
+
+      def extractGame(m:Regex.Match):Game = {
+        val values = 1 to 3 map m.group
+        val Seq(game_id, home_id, away_id) = values map Integer.parseInt
+        val (homeScore, awayScore) = scoresById(game_id)
+        new Game(game_id, 'n', homeScore, awayScore, home_id, away_id)
+      }
+
+      val gameItr = for (m <- match_data) yield extractGame(m)
+      gameItr.toList
     }
-    null
+
+    val games:List[Game] = jsExtract match {
+      case Some(src:String) =>
+        extractGames(src)
+      case _ =>
+        println("Match error")
+        null
+    }
+    games.toArray
   }
 }
 
@@ -102,8 +119,3 @@ class ScoreParser extends IParser {
 			
 */
 
-/*
-
-GameExtractor: .*var thisGame = new gameObj\("(\d+)", "(\d+)", "(\d+)".*
-JSExtractor <script type="text/javascript">\s*function gameObj(?:(?!</script>)[\s\S]).*
- */

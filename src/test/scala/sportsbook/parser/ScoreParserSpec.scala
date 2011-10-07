@@ -23,7 +23,7 @@ class ScoreParserSpec extends FeatureSpec with GivenWhenThen {
       then ("game should not be empty")
         assert(games != null)
       then("there should be " + NUM_GAMES + " games returned")
-        assert(games.length == 15)
+        assert(games.length == 16)
       and("the scores should match hand entered scores")
     }
   }

@@ -59,6 +59,14 @@ public class Game {
         this.home = home;
     }
 
+    public String toString() {
+        return "Game: " +
+                "\n\tid: = " + getId() +
+                "\n\tstatus = " + getStatus() +
+                "\n\tHome = " + getHome() + " : " + getHome_score() +
+                "\n\tAway = " + getAway() + " : " + getAway_score();
+    }
+
     private long id;
     private char status;
     private int home_score;

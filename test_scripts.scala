@@ -1,3 +1,5 @@
+/*
+
 import java.io.{FileInputStream, File}
 import sportsbook._
 import parser._
@@ -38,3 +40,5 @@ game:
   away
   home
 public Game(long id, char status, int home_score, int away_score, long home, long away)
+
+*/
