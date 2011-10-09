@@ -5,13 +5,13 @@
 
 <hibernate-mapping>
 
-	<class name="sportsbook.types.Team" table="Team">
+	<class name="sportsbook.types.Team">
 		<id name="id" type="long" column="id">
 			<generator class="assigned" />
 		</id>
 
-		<property name="name">
-			<column name="name" />
-		</property>
+		<property name="name" column="name" />
+
+        <joined-subclass name="NCAAF" table="NCAAF"/>
 	</class>
 </hibernate-mapping>
