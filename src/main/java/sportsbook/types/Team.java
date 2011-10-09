@@ -4,6 +4,12 @@ import java.io.Serializable;
 
 public abstract class Team implements Serializable {
 
+    public Team(long id, String name, long league) {
+        this.id = id;
+        this.name = name;
+        this.league = league;
+    }
+
     public long getId() {
         return id;
     }
