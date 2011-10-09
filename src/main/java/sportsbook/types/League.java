@@ -1,11 +1,13 @@
 package sportsbook.types;
 
+import java.io.Serializable;
+
 /**
  * Created by Jeff Stokes.
  * Date: 10/2/11
  * Time: 3:42 PM
  */
-public class League {
+public class League implements Serializable{
     public long getId() {
         return id;
     }

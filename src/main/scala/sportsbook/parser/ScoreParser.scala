@@ -4,6 +4,7 @@ import scala.xml._
 import sportsbook.types.{Game}
 import util.matching.Regex
 
+
 class ScoreParser extends IParser {
   
   def parse(xml:Node):Array[Game] = {
@@ -31,7 +32,7 @@ class ScoreParser extends IParser {
     }
 
     val JSExtractor =
-      """<script type="text/javascript">\s*function gameObj([\S\s]*?)</script>""".r
+      """<script type="text/javascript">[\S\s]*?function gameObj([\S\s]*?)</script>""".r
     val GameExtractor =
       """.*var thisGame = new gameObj\("(\d+)", "(\d+)", "(\d+)".*""".r
 
@@ -59,7 +60,13 @@ class ScoreParser extends IParser {
         println("Match error")
         null
     }
-    games.toArray
+    if (games != null) games.toArray else null
+  }
+  
+  def parse(src:String):Array[Game] = {
+    val hp = new HTMLParser
+    val xml = hp.loadXML(src)
+    parse(xml)
   }
 }
 

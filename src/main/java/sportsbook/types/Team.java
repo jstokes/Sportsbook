@@ -1,6 +1,8 @@
 package sportsbook.types;
 
-public class Team {
+import java.io.Serializable;
+
+public class Team implements Serializable {
 
     public long getId() {
         return id;
@@ -25,6 +27,10 @@ public class Team {
 
     public void setLeague(long league) {
         this.league = league;
+    }
+
+    public String toString() {
+        return name + " (" + id+ ")";
     }
 
     public long league;

@@ -9,7 +9,7 @@ class HTMLParser extends NoBindingFactoryAdapter {
     loadXML(source)
   }
 
-  def loadXML(source : InputSource) = {
+  def loadXML(source : InputSource):Node = {
     import nu.validator.htmlparser.{sax,common}
     import sax.HtmlParser
     import common.XmlViolationPolicy
@@ -19,5 +19,8 @@ class HTMLParser extends NoBindingFactoryAdapter {
     reader.setContentHandler(this)
     reader.parse(source)
     rootElem
+  }
+  def loadXML(source:String):Node = {
+    loadXML(new InputSource(source))
   }
 }

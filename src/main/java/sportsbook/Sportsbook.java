@@ -1,8 +1,12 @@
 package sportsbook;
 
+import org.xml.sax.InputSource;
 import sportsbook.dao.GameDAO;
 import sportsbook.parser.ScoreParser;
+import sportsbook.parser.HTMLParser;
 import sportsbook.types.Game;
+
+import javax.xml.soap.Node;
 
 /**
  * Created by Jeff Stokes.
@@ -11,12 +15,21 @@ import sportsbook.types.Game;
  */
 public class Sportsbook {
 
+    /* Class variables */
+    private static ScoreParser sp;
+
+
     public static void main(String[] args) {
         run();
     }
 
     private static void run() {
+        init();
         updateDB();
+    }
+
+    private static void init() {
+        sp = new ScoreParser();
     }
 
     private static void updateDB() {
@@ -24,11 +37,14 @@ public class Sportsbook {
     }
 
     private static void updateGameDB() {
-        //final String src = "http://scores.espn.go.com/nfl/scoreboard";
-        ScoreParser parser = new ScoreParser();
-        //Game[] games = parser.parse(src);
+        updateNFL();
+    }
 
-        GameDAO gDAO = new GameDAO();
-        //gDAO.postToDB(games);
+    private static void updateNFL() {
+        final String src = "http://scores.espn.go.com/nfl/scoreboard";
+        Game[] games = sp.parse(src);
+        GameDAO gameDAO = new GameDAO();
+        gameDAO.post(games);
+        for (Game g: games) { System.out.println("Added:" + g); }
     }
 }
