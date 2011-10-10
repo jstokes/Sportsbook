@@ -11,12 +11,21 @@ import sportsbook.types.Game;
  */
 public class Sportsbook {
 
+    /* Class variables */
+    private static ScoreParser sp;
+
+
     public static void main(String[] args) {
         run();
     }
 
     private static void run() {
+        init();
         updateDB();
+    }
+
+    private static void init() {
+        sp = new ScoreParser();
     }
 
     private static void updateDB() {
@@ -24,11 +33,27 @@ public class Sportsbook {
     }
 
     private static void updateGameDB() {
-        //final String src = "http://scores.espn.go.com/nfl/scoreboard";
-        ScoreParser parser = new ScoreParser();
-        //Game[] games = parser.parse(src);
+        updateNFL();
+        updateNCAAF();
+    }
 
-        GameDAO gDAO = new GameDAO();
-        //gDAO.postToDB(games);
+    private static void updateNFL() {
+        final String src = "http://scores.espn.go.com/nfl/scoreboard";
+        Game[] games = sp.parse(src, "NFL");
+        postGames(games);
+    }
+
+    private static void updateNCAAF() {
+        final String src = "http://scores.espn.go.com/ncf/scoreboard";
+        Game[] games = sp.parse(src, "NCAAF");
+        postGames(games);
+    }
+
+    private static void postGames(Game[] games) {
+        GameDAO gameDAO = new GameDAO();
+        gameDAO.post(games);
+        for (Game g: games) { System.out.println("Added:" + g); }
     }
 }
+
+/* <p id="311009002-statusText">Final</p> */

@@ -8,7 +8,7 @@ import java.io.FileInputStream
 import org.xml.sax.InputSource
 
 class ScoreParserSpec extends FeatureSpec with GivenWhenThen {
-  val NUM_GAMES = 15;
+  val NUM_GAMES = 16;
   val SCORE_FILE_PATH = "src/test/scala/sportsbook/parser/testscores.txt"
 
   feature("ScoreParser can read through html and retrieve game scores") {
@@ -24,7 +24,6 @@ class ScoreParserSpec extends FeatureSpec with GivenWhenThen {
         assert(games != null)
       then("there should be " + NUM_GAMES + " games returned")
         assert(games.length == 16)
-      and("the scores should match hand entered scores")
     }
   }
 }

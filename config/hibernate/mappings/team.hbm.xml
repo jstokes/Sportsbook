@@ -5,13 +5,13 @@
 
 <hibernate-mapping>
 
-	<class name="com.sportsbook.parser.java.Team" table="Team">
+	<class name="sportsbook.types.Team">
 		<id name="id" type="long" column="id">
-			<generator class="assigned" />
+			<generator class="native" />
 		</id>
-
-		<property name="name">
-			<column name="name" />
-		</property>
+		
+		<property name="name" column="name" />
+		<property name="espn_id" column="espn_id" />
+		<property name="league" column="league" />
 	</class>
 </hibernate-mapping>

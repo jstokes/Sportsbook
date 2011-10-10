@@ -1,6 +1,10 @@
 package sportsbook.types;
 
-public class Game {
+import sportsbook.dao.TeamDAO;
+
+import java.io.Serializable;
+
+public class Game implements Serializable {
 
     public Game(long id, char status, int home_score, int away_score, long home, long away) {
         this.id = id;
@@ -60,11 +64,12 @@ public class Game {
     }
 
     public String toString() {
-        return "Game: " +
-                "\n\tid: = " + getId() +
-                "\n\tstatus = " + getStatus() +
-                "\n\tHome = " + getHome() + " : " + getHome_score() +
-                "\n\tAway = " + getAway() + " : " + getAway_score();
+        TeamDAO teamDAO = new TeamDAO();
+        Team tHome = teamDAO.get(getHome());
+        Team tAway = teamDAO.get(getAway());
+        return "Game: ("+ id + ")" + "status= " + getStatus() +
+                "\n\tH = " + tHome + " : " + getHome_score() +
+                "\n\tA = " + tAway + " : " + getAway_score() + "\n";
     }
 
     private long id;
