@@ -12,7 +12,7 @@ val match_data = (TeamExtractor findAllIn xml.toString).matchData
 for (m <- match_data) {
   val id = Integer.parseInt(m.subgroups(0))
   val name = m.subgroups(1).replace("&amp;", "&")
-  val team = new Team(id, name, 2)
+  val team = new Team(id, name, "NCAA")
   val dao = new TeamDAO
   dao.post(team)
 }

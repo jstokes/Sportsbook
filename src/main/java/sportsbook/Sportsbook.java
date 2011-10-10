@@ -37,12 +37,21 @@ public class Sportsbook {
     }
 
     private static void updateGameDB() {
-        updateNFL();
+        //updateNFL();
+        updateNCAAF();
     }
 
     private static void updateNFL() {
         final String src = "http://scores.espn.go.com/nfl/scoreboard";
-        Game[] games = sp.parse(src);
+        Game[] games = sp.parse(src, "NFL");
+        GameDAO gameDAO = new GameDAO();
+        gameDAO.post(games);
+        for (Game g: games) { System.out.println("Added:" + g); }
+    }
+
+    private static void updateNCAAF() {
+        final String src = "http://scores.espn.go.com/ncf/scoreboard";
+        Game[] games = sp.parse(src, "NCAA");
         GameDAO gameDAO = new GameDAO();
         gameDAO.post(games);
         for (Game g: games) { System.out.println("Added:" + g); }

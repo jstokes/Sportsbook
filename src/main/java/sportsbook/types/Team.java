@@ -2,14 +2,14 @@ package sportsbook.types;
 
 import java.io.Serializable;
 
-public abstract class Team implements Serializable {
+public class Team implements Serializable {
 
-    public Team(long id, String name, long league) {
-        this.id = id;
+    public Team() { }
+    public Team(long espn_id, String name, String league) {
+        this.espn_id = espn_id;
         this.name = name;
         this.league = league;
     }
-
     public long getId() {
         return id;
     }
@@ -26,19 +26,29 @@ public abstract class Team implements Serializable {
         this.name = name;
     }
 
-    public long getLeague() {
+    public String getLeague() {
         return league;
     }
 
-    public void setLeague(long league) {
+    public void setLeague(String league) {
         this.league = league;
     }
 
     public String toString() {
-        return name + " (" + id+ ")";
+        return name + " (" + id + ")";
     }
 
-    public long league;
-    private long id;
-    private String name;
+    public long getEspn_id() {
+        return espn_id;
+    }
+
+    public void setEspn_id(long espn_id) {
+        this.espn_id = espn_id;
+    }
+    
+    protected String league;
+    protected long id;
+    protected String name;
+    protected long espn_id;
+
 }

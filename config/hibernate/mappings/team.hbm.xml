@@ -12,6 +12,6 @@
 
 		<property name="name" column="name" />
 
-        <joined-subclass name="NCAAF" table="NCAAF"/>
+        <subclass name="NCAAF" discriminator-value="NCAAF" />
 	</class>
 </hibernate-mapping>
