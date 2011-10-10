@@ -67,11 +67,9 @@ public class Game implements Serializable {
         TeamDAO teamDAO = new TeamDAO();
         Team tHome = teamDAO.get(getHome());
         Team tAway = teamDAO.get(getAway());
-        return "Game: " +
-                "\n\tid: = " + getId() +
-                "\n\tstatus = " + getStatus() +
-                "\n\tHome = " + tHome + " : " + getHome_score() +
-                "\n\tAway = " + tAway + " : " + getAway_score();
+        return "Game: ("+ id + ")" + "status= " + getStatus() +
+                "\n\tH = " + tHome + " : " + getHome_score() +
+                "\n\tA = " + tAway + " : " + getAway_score() + "\n";
     }
 
     private long id;

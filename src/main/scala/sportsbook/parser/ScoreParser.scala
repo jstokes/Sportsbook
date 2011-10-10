@@ -44,12 +44,21 @@ class ScoreParser extends IParser {
 
       def extractGame(m:Regex.Match):Game = {
         val values = 1 to 3 map m.group
-        var Seq(game_id, home_id, away_id) = values map Integer.parseInt
+        val Seq(game_id, homeId, awayId) = values map Integer.parseInt
         val (homeScore, awayScore) = scoresById(game_id)
         val tDAO = new TeamDAO
-        home_id = tDAO.getByESPN(home_id, league)
-        away_id = tDAO.getByESPN(away_id, league)
-        new Game(game_id, 'n', homeScore, awayScore, home_id, away_id)
+        val home_id = tDAO.getByESPN(homeId, league)
+        val away_id = tDAO.getByESPN(awayId, league)
+
+        if (home_id == -1) {
+          println("unable to find team " + homeId)
+          null
+        } else if (away_id == -1) {
+            println("unable to find team " + awayId)
+            null
+        } else {
+            new Game(game_id, 'n', homeScore, awayScore, home_id, away_id)
+        }
       }
 
       val gameItr = for (m <- match_data) yield extractGame(m)

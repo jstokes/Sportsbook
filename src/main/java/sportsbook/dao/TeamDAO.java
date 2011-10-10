@@ -14,14 +14,16 @@ public class TeamDAO extends AbstractDAOImpl<Team, Long> implements AbstractDAO<
     }
 
     public int getByESPN(int espnID, String league) {
-        System.out.println("---------------------------------------------");
-        System.out.println("GETBYESPN:" + espnID + ":" + league);
-        session = HibernateUtil.getSessionFactory().openSession();
-        Query qry = session.createQuery("from Team where espn_id=" + espnID + "and league='"
-                + league +"'");
-        qry.setMaxResults(1);
-        Team t = (Team) qry.uniqueResult();
-        return (int) t.getId();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query qry = session.createQuery("from Team where espn_id=" + espnID + "and league='"
+                    + league +"'");
+            qry.setMaxResults(1);
+            Team t = (Team) qry.uniqueResult();
+            return (int) t.getId();
+        } catch (Exception e) {
+            return -1;
+        }
     }
 
     @Override

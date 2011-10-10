@@ -16,9 +16,11 @@ public abstract class AbstractDAOImpl<T extends Serializable, KeyType extends Se
     public void post(T t) {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            tx = session.beginTransaction();
-            session.saveOrUpdate(t);
-            tx.commit();
+            if (t != null) {
+                tx = session.beginTransaction();
+                session.saveOrUpdate(t);
+                tx.commit();
+            }
         } catch (Exception e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();
