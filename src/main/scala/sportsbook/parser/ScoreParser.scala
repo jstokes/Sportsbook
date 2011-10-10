@@ -5,6 +5,7 @@ import sportsbook.types.{Game}
 import util.matching.Regex
 import sportsbook.dao.TeamDAO
 
+/* <p id="311009002-statusText">Final</p> */
 
 class ScoreParser extends IParser {
   def parse(xml:Node, league:String):Array[Game] = {
@@ -31,16 +32,14 @@ class ScoreParser extends IParser {
       (home_score, away_score)
     }
 
-    val JSExtractor =
+    val JSExtractor:Regex =
       """<script type="text/javascript">[\S\s]*?function gameObj([\S\s]*?)</script>""".r
-    val GameExtractor =
+    val GameExtractor:Regex =
       """.*var thisGame = new gameObj\("(\d+)", "(\d+)", "(\d+)".*""".r
 
     val jsExtract: Option[String] = JSExtractor findFirstIn (xml toString)
 
     def extractGames(src:String):List[Game] = {
-      val rplSrc = src.replaceAll("&quot;", "\"")
-      val match_data = (GameExtractor findAllIn rplSrc).matchData
 
       def extractGame(m:Regex.Match):Game = {
         val values = 1 to 3 map m.group
@@ -49,6 +48,18 @@ class ScoreParser extends IParser {
         val tDAO = new TeamDAO
         val home_id = tDAO.getByESPN(homeId, league)
         val away_id = tDAO.getByESPN(awayId, league)
+        lazy val status = {
+          val StatusExtractor:Regex = {
+            val beg = """<p id=""""
+            val end = """-statusText">(\w+)"""
+            new Regex(beg + game_id + end)
+          }
+          val status:String = StatusExtractor findFirstIn (xml toString) match {
+            case Some(StatusExtractor(status)) => status
+            case None => "none"
+          }
+          if (status == "Final") 'f' else 'n'
+        }
 
         if (home_id == -1) {
           println("unable to find team " + homeId)
@@ -57,10 +68,12 @@ class ScoreParser extends IParser {
             println("unable to find team " + awayId)
             null
         } else {
-            new Game(game_id, 'n', homeScore, awayScore, home_id, away_id)
+            new Game(game_id, status, homeScore, awayScore, home_id, away_id)
         }
       }
 
+      val rplSrc = src.replaceAll("&quot;", "\"")
+      val match_data = (GameExtractor findAllIn rplSrc).matchData
       val gameItr = for (m <- match_data) yield extractGame(m)
       gameItr.toList
     }

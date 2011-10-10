@@ -14,5 +14,3 @@ initialCommands := """
 
 // set the initial commands when entering 'console' only
 initialCommands in console := "import sportsbook._"
-
-defaultExcludes  := "test_scripts.scala"
