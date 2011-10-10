@@ -7,11 +7,11 @@
 
 	<class name="sportsbook.types.Team">
 		<id name="id" type="long" column="id">
-			<generator class="assigned" />
+			<generator class="native" />
 		</id>
-
+		
 		<property name="name" column="name" />
-
-        <subclass name="NCAAF" discriminator-value="NCAAF" />
+		<property name="espn_id" column="espn_id" />
+		<property name="league" column="league" />
 	</class>
 </hibernate-mapping>
