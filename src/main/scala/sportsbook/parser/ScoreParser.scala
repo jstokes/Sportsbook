@@ -5,8 +5,6 @@ import sportsbook.types.{Game}
 import util.matching.Regex
 import sportsbook.dao.TeamDAO
 
-/* <p id="311009002-statusText">Final</p> */
-
 class ScoreParser extends IParser {
   def parse(xml:Node, league:String):Array[Game] = {
     def scoresById(id:Int):(Int, Int) = {
